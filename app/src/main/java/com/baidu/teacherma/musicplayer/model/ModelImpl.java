@@ -19,13 +19,13 @@ import java.util.List;
  */
 public class ModelImpl implements Model {
 
-    private ModelImpl(){
+    private ModelImpl() {
 
     }
 
     private static final ModelImpl sInstance = new ModelImpl();
 
-    public static ModelImpl getInstance(){
+    public static ModelImpl getInstance() {
         return sInstance;
     }
 
@@ -54,7 +54,8 @@ public class ModelImpl implements Model {
                     MediaStore.Audio.Media.TITLE,
                     MediaStore.Audio.Albums.ALBUM_ID,
                     MediaStore.Audio.Media.DATA,
-                    MediaStore.Audio.Media.DURATION
+                    MediaStore.Audio.Media.DURATION,
+                    MediaStore.Audio.Media.ARTIST
             };
 
 //			String where = MediaStore.Audio.Media.DATA + " like \"%" + "/music" + "%\"";
@@ -75,11 +76,12 @@ public class ModelImpl implements Model {
                     Uri musicUri = Uri.withAppendedPath(uri, id);
 
                     String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                    String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
                     long duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
 
                     int albumId = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ID));
                     Uri albumUri = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId);
-                    MusicItem data = new MusicItem(musicUri, albumUri, name, duration);
+                    MusicItem data = new MusicItem(musicUri, albumUri, name, duration, artist);
 
                     publishProgress(data);
 
@@ -100,7 +102,7 @@ public class ModelImpl implements Model {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (null != mListOnResultCallback) {
-                mListOnResultCallback.get().onCallback(mDataList,100);
+                mListOnResultCallback.get().onCallback(mDataList, 100);
             }
         }
     }

@@ -31,19 +31,32 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <View
+        android:id="@+id/tool_bar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/shadow_reverse"
+        android:layout_below="@id/main_toolbar"/>
+
     <include layout="@layout/bottom_play_bar"
         android:id="@+id/bottom_play_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
 
+    <View
+        android:id="@+id/recycler_view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_above="@id/bottom_play_bar"
+        android:background="@drawable/shadow"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/music_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_toolbar"
-        android:layout_above="@id/bottom_play_bar"
-        android:background="@color/colorPrimaryDark">
+        android:layout_below="@id/tool_bar_shadow"
+        android:layout_above="@id/recycler_view_shadow">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

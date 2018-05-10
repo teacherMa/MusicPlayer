@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">MusicPlayer</string>
+    <string name="app_name">享聽音樂</string>
 
     <string name="menu_share_item">Share</string>
     <string name="menu_search_item">Search</string>
+
+    <string name="random_play">随机播放</string>
+    <string name="order_play">顺序播放</string>
 </resources>

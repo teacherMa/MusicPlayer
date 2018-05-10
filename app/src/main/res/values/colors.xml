@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#e0e0e0</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="divide">#bdbdbd</color>
+    <color name="divideLine">#bdbdbd</color>
+
+    <color name="shadowBegin">#eeeeee</color>
+    <color name="shadowEnd">#bdbdbd</color>
 </resources>

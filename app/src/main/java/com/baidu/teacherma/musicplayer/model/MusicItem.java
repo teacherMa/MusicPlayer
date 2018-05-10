@@ -1,15 +1,10 @@
 package com.baidu.teacherma.musicplayer.model;
 
-/**
- * Created by teacherMa on 2018/5/8
- */
-
 import android.net.Uri;
 
-
 /**
- * Created by cvter on 2017/7/10.
- * </p>
+ * Created by teacherMa on 2018/5/8
+ * <p>
  * Storage music info that from scan local memory
  */
 
@@ -17,13 +12,15 @@ public class MusicItem {
     private String name;
     private String songUri;
     private String albumUri;
+    private String artist;
     private long duration;
 
-    public MusicItem(Uri songUri, Uri albumUri, String strName, long duration) {
+    public MusicItem(Uri songUri, Uri albumUri, String strName, long duration, String artist) {
         this.name = strName;
         this.songUri = songUri.toString();
         this.duration = duration;
         this.albumUri = albumUri.toString();
+        this.artist = artist;
     }
 
     public String getName() {
@@ -56,5 +53,21 @@ public class MusicItem {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public void setSongUri(String songUri) {
+        this.songUri = songUri;
+    }
+
+    public void setAlbumUri(String albumUri) {
+        this.albumUri = albumUri;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 }

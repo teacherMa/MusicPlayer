@@ -1,7 +1,7 @@
 package com.baidu.teacherma.musicplayer.view;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,16 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baidu.teacherma.musicplayer.R;
 import com.baidu.teacherma.musicplayer.model.ModelCallback;
 import com.baidu.teacherma.musicplayer.model.ModelImpl;
+import com.baidu.teacherma.musicplayer.model.MusicHolder;
 import com.baidu.teacherma.musicplayer.model.MusicItem;
+import com.baidu.teacherma.musicplayer.model.MusicPlayerImpl;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +48,12 @@ public class MainActivity extends AppCompatActivity {
         ImageView preMusic = findViewById(R.id.pre_music);
         ImageView nextMusic = findViewById(R.id.next_music);
         ImageView changeState = findViewById(R.id.change_state);
-        mBottomPlayBar = new BottomPlayBar(preMusic, nextMusic, changeState);
+        TextView musicName = findViewById(R.id.music_name);
+        mBottomPlayBar = new BottomPlayBar(preMusic, nextMusic, changeState, musicName);
+
+        MusicPlayerImpl musicPlayer = new MusicPlayerImpl();
+        mBottomPlayBar.setMusicPlayer(musicPlayer);
+        musicPlayer.setPlayerCallback(mBottomPlayBar);
 
         if (checkPermission()) {
             getData();
@@ -74,8 +82,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void gotoSearch() {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            home.addCategory(Intent.CATEGORY_HOME);
+            startActivity(home);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
+    private void gotoSearch() {
+        startActivity(SearchActivity.getNewIntent(this));
     }
 
     private void gotoShare() {
@@ -87,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCallback(List<MusicItem> data, int result) {
                 MusicViewAdapter adapter = new MusicViewAdapter(data, MainActivity.this);
+                MusicHolder.getInstance().setMusicItems(data);
+                adapter.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(Object data, int position) {
+                        if (data instanceof MusicItem) {
+                            MusicItem musicItem = (MusicItem) data;
+                            mBottomPlayBar.requestPlay(musicItem);
+                        }
+                    }
+                });
                 mMusicList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 mMusicList.setAdapter(adapter);
             }
@@ -97,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (result != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
                     1);
             return false;
         }
