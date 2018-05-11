@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">享聽音樂</string>
 
-    <string name="menu_share_item">Share</string>
-    <string name="menu_search_item">Search</string>
+    <string name="menu_share_item">分享</string>
+    <string name="menu_search_item">永乐票务</string>
+    <string name="menu_edit_app_info">编辑</string>
+
+    <string name="edit_app_info_dialog_title">编辑</string>
+    <string name="edit_app_info_dialog_message">输入信息</string>
 
     <string name="random_play">随机播放</string>
     <string name="order_play">顺序播放</string>

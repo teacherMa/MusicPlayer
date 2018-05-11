@@ -8,4 +8,12 @@
 
     <color name="shadowBegin">#eeeeee</color>
     <color name="shadowEnd">#bdbdbd</color>
+
+    <color name="timeZoneColor">#000000</color>
+
+    <color name="mainToolbarBgColor">#b388ff</color>
+    <color name="aboutAppToolbarColor">#b388ff</color>
+    <color name="mainBottomPlayBarColor">#b388ff</color>
+
+
 </resources>

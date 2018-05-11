@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="12dp"
+    android:background="@color/mainBottomPlayBarColor"
     android:paddingTop="6dp">
 
     <TextView
@@ -23,6 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/music_name"
         android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="4dp"
         android:src="@drawable/ic_play_arrow_36dp" />
 
@@ -33,6 +36,8 @@
         android:layout_below="@id/music_name"
         android:layout_marginEnd="16dp"
         android:layout_toStartOf="@id/change_state"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="4dp"
         android:src="@drawable/ic_skip_previous_36dp" />
 
@@ -43,6 +48,8 @@
         android:layout_below="@id/music_name"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/change_state"
+        android:clickable="true"
+        android:focusable="true"
         android:padding="4dp"
         android:src="@drawable/ic_skip_next_36dp" />
 
@@ -53,7 +60,7 @@
         android:layout_below="@id/music_name"
         android:clickable="true"
         android:focusable="true"
-        android:padding="12dp"
+        android:paddingStart="12dp"
         android:text="@string/order_play" />
 
 </RelativeLayout>

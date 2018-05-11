@@ -11,9 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +29,7 @@ import com.baidu.teacherma.musicplayer.model.MusicPlayerImpl;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnBottomShareItemClickListener {
 
     private Toolbar mToolbar;
     private ImageView mIvAbout;
@@ -42,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         mIvAbout = findViewById(R.id.about_app);
+        mIvAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAboutApp();
+            }
+        });
 
         mMusicList = findViewById(R.id.music_list);
 
@@ -49,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView nextMusic = findViewById(R.id.next_music);
         ImageView changeState = findViewById(R.id.change_state);
         TextView musicName = findViewById(R.id.music_name);
-        mBottomPlayBar = new BottomPlayBar(preMusic, nextMusic, changeState, musicName);
+        TextView playMode = findViewById(R.id.play_mode);
+        mBottomPlayBar = new BottomPlayBar(preMusic, nextMusic, changeState, musicName, playMode);
 
         MusicPlayerImpl musicPlayer = new MusicPlayerImpl();
         mBottomPlayBar.setMusicPlayer(musicPlayer);
@@ -99,7 +109,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gotoShare() {
+        BottomShareView bottomShareView = new BottomShareView(this);
+        bottomShareView.setOnBottomShareItemClickListener(this);
+        View shareRoot = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
+        bottomShareView.showAtLocation(shareRoot, Gravity.BOTTOM, 0, 0);
+    }
 
+    private void gotoAboutApp(){
+        startActivity(AboutAppActivity.getNewIntent(this));
     }
 
     private void getData() {
@@ -138,5 +155,10 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         getData();
+    }
+
+    @Override
+    public void onBottomShareItemClick(int position) {
+
     }
 }
